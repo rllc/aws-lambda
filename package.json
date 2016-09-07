@@ -1,0 +1,24 @@
+{
+  "name": "llc-archives-lambda",
+  "version": "1.0.0",
+  "description": "sync s3 buckets with firebase database",
+  "main": "index.js",
+  "scripts": {
+    "test": "node-lambda run -j event-add.json -f deploy.env && node-lambda run -j event-delete.json -f deploy.env"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rllc/aws-lambda.git"
+  },
+  "author": "Steven McAdams",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rllc/aws-lambda/issues"
+  },
+  "homepage": "https://github.com/rllc/aws-lambda#readme",
+  "dependencies" : {
+    "aws-sdk": "2.5.5",
+    "id3-parser" : "1.0.2",
+    "firebase" : "3.3.0"
+  }
+}

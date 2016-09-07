@@ -1,0 +1,36 @@
+{
+    "Records": [
+        {
+            "eventVersion": "2.0",
+            "eventSource": "aws:s3",
+            "awsRegion": "us-east-1",
+            "eventTime": "2016-09-07T00:05:34.441Z",
+            "eventName": "ObjectRemoved:Delete",
+            "userIdentity": {
+                "principalId": "AWS:AIDAJJO4LDQTIIEBZOKPW"
+            },
+            "requestParameters": {
+                "sourceIPAddress": "127.0.0.1"
+            },
+            "responseElements": {
+                "x-amz-request-id": "06F51600E64E60B9",
+                "x-amz-id-2": "KLTiTbVdBcYwxATqglMe3wLo+v1YnFVx55fONCXzCFkaqmlRhbHpj1zuc1ckJ4nV2ruUNgK/ats="
+            },
+            "s3": {
+                "s3SchemaVersion": "1.0",
+                "configurationId": "c0ca7322-ad43-4647-be60-a8905eaca9d9",
+                "bucket": {
+                    "name": "rockford-archives-old",
+                    "ownerIdentity": {
+                        "principalId": "A2ZROSMU8YWGHP"
+                    },
+                    "arn": "arn:aws:s3:::rockford-archives-old"
+                },
+                "object": {
+                    "key": "rllc/mpthreetest.mp3",
+                    "sequencer": "0057CF59CE66146B1B"
+                }
+            }
+        }
+    ]
+}
