@@ -31,5 +31,5 @@ node-lambda package -f deploy.env -x "event*.json"
 ## Deploying
 
 ```sh
-node-lambda deploy -f deploy.env -x "event*.json" -P llc -p -o arn:aws:iam::941167095498:role/service-role/process-mp3
+node-lambda deploy -f deploy.env -x "event*.json" -P llc -p -o arn:aws:iam::941167095498:role/service-role/llc-archives-lambda
 ```
