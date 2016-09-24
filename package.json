@@ -19,6 +19,6 @@
   "dependencies" : {
     "aws-sdk": "2.5.5",
     "id3-parser" : "1.0.2",
-    "firebase" : "3.3.0"
+    "firebase" : "3.4.0"
   }
 }
