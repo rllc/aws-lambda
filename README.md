@@ -1,35 +1,11 @@
-# aws-lambda
+# llc-archives-lambda
 
-## Initialize
-```sh
-npm install
-```
+aws lambda functions used in the operations of the LLC Archives
 
-set `DATABASE_URL` and `SERVICE_ACCOUNT` in deploy.env
+# s3-event-handler
 
-configure AWS settings in `.env`
+fires when events happen on s3. Keeps the firebase database updated in real time.
 
+# s3-sync
 
-## Testing
-```sh
-npm test
-```
-
-or
-
-```sh
-node-lambda run -j event-add.json -f deploy.env
-node-lambda run -j event-delete.json -f deploy.env
-```
-
-## Packaging
-
-```sh
-node-lambda package -f deploy.env -x "event*.json"
-```
-
-## Deploying
-
-```sh
-node-lambda deploy -f deploy.env -x "event*.json" -P llc -p -o arn:aws:iam::941167095498:role/service-role/llc-archives-lambda
-```
+fire on demand. Walks over all mp3 sermons in s3 and synchronizes the firebase database

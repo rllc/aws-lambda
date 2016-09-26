@@ -1,7 +1,7 @@
 {
-  "name": "llc-archives-lambda",
+  "name": "s3-event-handler",
   "version": "1.0.0",
-  "description": "sync s3 buckets with firebase database",
+  "description": "responds to s3 events and updates firebase database",
   "main": "index.js",
   "scripts": {
     "test": "node-lambda run -j event-add.json -f deploy.env && node-lambda run -j event-delete.json -f deploy.env"
