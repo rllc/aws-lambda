@@ -16,7 +16,7 @@ exports.handler = (event, context, callback) => {
     const eventName = event.Records[0].eventName;
     const bucket = s3Data.bucket.name;
     const fileUrl = 'https://s3.amazonaws.com/'  + bucket + '/' + s3Data.object.key;
-    const databaseKey = 'sermons/' + bucket + '/' + crypto.createHash('md5').update(s3Data.object.key).digest("hex");
+    const databaseKey = 'sermons/' + crypto.createHash('md5').update(s3Data.object.key).digest("hex");
 
     function persistSermon(sermonData, label) {
       firebase.database().ref(databaseKey).set(sermonData).then(function(data) {
@@ -33,6 +33,7 @@ exports.handler = (event, context, callback) => {
     else if (eventName.includes('ObjectCreated')) {
         console.log(fileUrl + ' [CREATING]');
         const sermonData = {
+          bucketID : bucket,
           minister : '',
           bibleText : '',
           comments : '',
