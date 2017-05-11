@@ -3,6 +3,10 @@ console.log('Loading function');
 
 let firebase = require('firebase');
 let crypto = require('crypto');
+let moment = require('moment');
+let aws = require('aws-sdk');
+let s3 = new aws.S3({ apiVersion: '2006-03-01' });
+let id3 = require('id3-parser');
 
 firebase.initializeApp({
   serviceAccount: JSON.parse(process.env.SERVICE_ACCOUNT),
@@ -15,15 +19,25 @@ exports.handler = (event, context, callback) => {
     const s3Data = event.Records[0].s3;
     const eventName = event.Records[0].eventName;
     const bucket = s3Data.bucket.name;
+    const key = decodeURIComponent(s3Data.object.key.replace(/\+/g, ' '));
     const fileUrl = 'https://s3.amazonaws.com/'  + bucket + '/' + s3Data.object.key;
     const databaseKey = 'sermons/' + crypto.createHash('md5').update(s3Data.object.key).digest("hex");
 
     function persistSermon(sermonData, label) {
+      console.log(sermonData);
       firebase.database().ref(databaseKey).set(sermonData).then(function(data) {
         callback(null, fileUrl + " : " + label);
       }).catch(function (error) {
         callback('Database set error ' + error);
       });
+    }
+
+    function formatDate(date) {
+      var formattedDate = moment(date.substring(0,10), 'MM/DD/YYYY').format();
+      if ('Invalid date' === formattedDate) {
+        formattedDate = moment().format();
+      }
+      return formattedDate;
     }
 
     if (eventName.includes('ObjectRemoved')) {
@@ -32,15 +46,35 @@ exports.handler = (event, context, callback) => {
     }
     else if (eventName.includes('ObjectCreated')) {
         console.log(fileUrl + ' [CREATING]');
-        const sermonData = {
-          bucketID : bucket,
-          minister : '',
-          bibleText : '',
-          comments : '',
-          date : '',
-          published : false,
-          fileUrl : fileUrl
-        };
-        persistSermon(sermonData, 'CREATED');
+        s3.getObject({Bucket: bucket, Key: key}, (err, data) => {
+            if (err) {
+                console.log(err);
+                const message = `Error getting object ${key} from bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`;
+                console.log(message);
+                const sermonData = {
+                  bucketID : bucket,
+                  minister : '',
+                  bibleText : '',
+                  comments : '',
+                  date : moment().format(),
+                  published : false,
+                  fileUrl : fileUrl
+                };
+                persistSermon(sermonData, 'CREATED');
+            } else {
+                id3.parse(new Buffer(data.Body)).then(function (tag) {
+                  const sermonData = {
+                    bucketID : bucket,
+                    minister : tag.artist ? tag.artist : '',
+                    bibleText : tag.album ? tag.album : '',
+                    comments : tag.comment ? tag.comment : '',
+                    date : formatDate(tag.title ? tag.title : ''),
+                    published : false,
+                    fileUrl : fileUrl
+                  };
+                  persistSermon(sermonData, 'CREATED');
+            });
+          }
+        });
   }
 };
