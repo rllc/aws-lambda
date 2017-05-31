@@ -8,6 +8,8 @@ let aws = require('aws-sdk');
 let s3 = new aws.S3({ apiVersion: '2006-03-01' });
 let id3 = require('id3-parser');
 
+aws.config.setPromisesDependency(require('Q').Promise);
+
 firebase.initializeApp({
   serviceAccount: JSON.parse(process.env.SERVICE_ACCOUNT),
   databaseURL: process.env.DATABASE_URL
@@ -33,6 +35,7 @@ exports.handler = (event, context, callback) => {
     }
 
     function formatDate(date) {
+      console.log('formatDate');
       var formattedDate = moment(date.substring(0,10), 'MM/DD/YYYY').format();
       if ('Invalid date' === formattedDate) {
         formattedDate = moment().format();
@@ -46,35 +49,37 @@ exports.handler = (event, context, callback) => {
     }
     else if (eventName.includes('ObjectCreated')) {
         console.log(fileUrl + ' [CREATING]');
-        s3.getObject({Bucket: bucket, Key: key}, (err, data) => {
-            if (err) {
-                console.log(err);
-                const message = `Error getting object ${key} from bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`;
-                console.log(message);
-                const sermonData = {
-                  bucketID : bucket,
-                  minister : '',
-                  bibleText : '',
-                  comments : '',
-                  date : moment().format(),
-                  published : false,
-                  fileUrl : fileUrl
-                };
-                persistSermon(sermonData, 'CREATED');
-            } else {
-                id3.parse(new Buffer(data.Body)).then(function (tag) {
-                  const sermonData = {
-                    bucketID : bucket,
-                    minister : tag.artist ? tag.artist : '',
-                    bibleText : tag.album ? tag.album : '',
-                    comments : tag.comment ? tag.comment : '',
-                    date : formatDate(tag.title ? tag.title : ''),
-                    published : false,
-                    fileUrl : fileUrl
-                  };
-                  persistSermon(sermonData, 'CREATED');
-            });
-          }
+        s3.getObject({Bucket: bucket, Key: key}).promise()
+        .then(function(data) {
+          console.log('parsing mp3 tag');
+          id3.parse(new Buffer(data.Body)).then(function (tag) {
+            console.log('parsed mp3 tag');
+            const sermonData = {
+              bucketID : bucket,
+              minister : tag.artist ? tag.artist : '',
+              bibleText : tag.album ? tag.album : '',
+              comments : tag.comment ? tag.comment : '',
+              date : formatDate(tag.title ? tag.title : ''),
+              published : false,
+              fileUrl : fileUrl
+            };
+            persistSermon(sermonData, 'CREATED');
+          });
+
+        }).catch(function(err) {
+          console.log(err);
+          const message = `Error getting object ${key} from bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`;
+          console.log(message);
+          const sermonData = {
+            bucketID : bucket,
+            minister : '',
+            bibleText : '',
+            comments : '',
+            date : moment().format(),
+            published : false,
+            fileUrl : fileUrl
+          };
+          persistSermon(sermonData, 'CREATED');
         });
   }
 };
