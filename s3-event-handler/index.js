@@ -8,7 +8,7 @@ let aws = require('aws-sdk');
 let s3 = new aws.S3({ apiVersion: '2006-03-01' });
 let id3 = require('id3-parser');
 
-aws.config.setPromisesDependency(require('Q').Promise);
+aws.config.setPromisesDependency(require('q').Promise);
 
 firebase.initializeApp({
   serviceAccount: JSON.parse(process.env.SERVICE_ACCOUNT),
