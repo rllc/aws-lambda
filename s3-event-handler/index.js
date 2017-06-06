@@ -34,6 +34,19 @@ exports.handler = (event, context, callback) => {
       });
     }
 
+    function persistEmptySermon() {
+      const sermonData = {
+        bucketID : bucket,
+        minister : '',
+        bibleText : '',
+        comments : '',
+        date : moment().format(),
+        published : false,
+        fileUrl : fileUrl
+      };
+      persistSermon(sermonData, 'CREATED');
+    }
+
     function formatDate(date) {
       console.log('formatDate');
       var formattedDate = moment(date.substring(0,10), 'MM/DD/YYYY').format();
@@ -52,7 +65,8 @@ exports.handler = (event, context, callback) => {
         s3.getObject({Bucket: bucket, Key: key}).promise()
         .then(function(data) {
           console.log('parsing mp3 tag');
-          id3.parse(new Buffer(data.Body)).then(function (tag) {
+          id3.parse(new Buffer(data.Body))
+          .then(function (tag) {
             console.log('parsed mp3 tag');
             const sermonData = {
               bucketID : bucket,
@@ -64,22 +78,16 @@ exports.handler = (event, context, callback) => {
               fileUrl : fileUrl
             };
             persistSermon(sermonData, 'CREATED');
+          },
+          function(err) {
+            console.log('unable to parse mp3 tag : ' + err);
+            persistEmptySermon();
           });
-
         }).catch(function(err) {
           console.log(err);
           const message = `Error getting object ${key} from bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`;
           console.log(message);
-          const sermonData = {
-            bucketID : bucket,
-            minister : '',
-            bibleText : '',
-            comments : '',
-            date : moment().format(),
-            published : false,
-            fileUrl : fileUrl
-          };
-          persistSermon(sermonData, 'CREATED');
+          persistEmptySermon();
         });
   }
 };
