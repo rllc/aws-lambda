@@ -72,7 +72,7 @@ exports.handler = (event, context, callback) => {
               bucketID : bucket,
               minister : tag.artist ? tag.artist : '',
               bibleText : tag.album ? tag.album : '',
-              comments : tag.comment ? tag.comment : '',
+              comments : tag.comments ? tag.comments : '',
               date : formatDate(tag.title ? tag.title : ''),
               published : false,
               fileUrl : fileUrl
