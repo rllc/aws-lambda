@@ -26,7 +26,7 @@ exports.handler = (event, context, callback) => {
     const databaseKey = 'sermons/' + crypto.createHash('md5').update(s3Data.object.key).digest("hex");
 
     function persistSermon(sermonData, label) {
-      console.log(sermonData);
+      console.log('sermonData: %j, databaseKey: %s', sermonData, databaseKey);
       firebase.database().ref(databaseKey).set(sermonData).then(function(data) {
         callback(null, fileUrl + " : " + label);
       }).catch(function (error) {
