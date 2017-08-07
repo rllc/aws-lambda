@@ -67,7 +67,7 @@ exports.handler = (event, context, callback) => {
           console.log('parsing mp3 tag');
           id3.parse(new Buffer(data.Body))
           .then(function (tag) {
-            console.log('parsed mp3 tag');
+            console.log('parsed mp3 tag: %j', tag);
             const sermonData = {
               bucketID : bucket,
               minister : tag.artist ? tag.artist : '',
