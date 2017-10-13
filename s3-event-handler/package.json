@@ -18,7 +18,7 @@
   "homepage": "https://github.com/rllc/aws-lambda#readme",
   "dependencies": {
     "aws-sdk": "^2.49.0",
-    "crypto": "0.0.3",
+    "crypto": "1.0.1",
     "firebase": "3.4.0",
     "id3-parser": "^1.2.0",
     "moment": "^2.18.1",
