@@ -181,7 +181,12 @@ exports.handler = (event, context, callback) => {
       },
       {
         "bucket": "toronto-archives",
-        "admins": []
+        "admins": [
+          {
+            "name": "Daniel",
+            "email": "daniel_simonson@hotmail.com"
+          }
+        ]
       },
       {
         "bucket": "wolf-lake-archives",
