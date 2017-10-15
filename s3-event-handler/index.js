@@ -245,14 +245,19 @@ exports.handler = (event, context, callback) => {
   function persistSermon(sermonData, label) {
     console.log('sermonData: %j, databaseKey: %s', sermonData, databaseKey);
     firebase.database().ref(databaseKey).set(sermonData).then(function(data) {
-      ses.sendBulkTemplatedEmail(buildEmail(sermonData), function(err, data) {
-        if (err) {
-          console.log(err);
-          callback('Send Email Error' + error);
-        } else {
-          callback(null, fileUrl + " : " + label);
-        }
-      });
+      if (sermonData != null) {
+        ses.sendBulkTemplatedEmail(buildEmail(sermonData), function(err, data) {
+          if (err) {
+            console.log(err);
+            callback('Send Email Error' + error);
+          } else {
+            callback(null, fileUrl + " : " + label);
+          }
+        });
+      }
+      else {
+        callback(null, fileUrl + " : " + label);
+      }
     }).catch(function(error) {
       callback('Database set error ' + error);
     });
