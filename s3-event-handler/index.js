@@ -184,7 +184,7 @@ exports.handler = (event, context, callback) => {
         "admins": [
           {
             "name": "Daniel",
-            "email": "daniel_simonson@hotmail.com"
+            "email": "tllcrecord@gmail.com"
           }
         ]
       },
