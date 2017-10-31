@@ -164,6 +164,14 @@ exports.handler = (event, context, callback) => {
           {
             "name": "Chet",
             "email": "laurachetdavison@gmail.com"
+          },
+          {
+            "name": "Phillip",
+            "email": "philliploukusa@gmail.com"
+          },
+          {
+            "name": "Jake",
+            "email": "jakerfuller@gmail.com"
           }
         ]
       },
