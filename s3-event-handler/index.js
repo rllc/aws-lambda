@@ -205,17 +205,6 @@ exports.handler = (event, context, callback) => {
       }
     ];
 
-    congregationAdmins.forEach(function(bucket) {
-      bucket.admins.push({
-        "name": "Steve",
-        "email": "smcadams86+archive.llchurch.org@gmail.com"
-      });
-      bucket.admins.push({
-        "name": "Adrian",
-        "email": "apirness@gmail.com"
-      });
-    });
-
     return congregationAdmins.find(function(bucket) {
       return bucket.bucket == sermonData.bucketID
     }).admins.map(function(admin) {
