@@ -113,9 +113,18 @@ exports.handler = (event, context, callback) => {
       {
         "bucket": "monticello-archives",
         "admins": [{
-          "name": "Tim",
-          "email": "timhillu03@gmail.com"
-        }]
+            "name": "Tim",
+            "email": "timhillu03@gmail.com"
+          },
+          {
+            "name": "Bruce",
+            "email": "bherrala@gmail.com"
+          },
+          {
+            "name": "Monticello Archiver",
+            "email": "llcmwebcast@gmail.com"
+          }
+        ]
       },
       {
         "bucket": "phoenix-archives",
@@ -189,12 +198,10 @@ exports.handler = (event, context, callback) => {
       },
       {
         "bucket": "toronto-archives",
-        "admins": [
-          {
-            "name": "Daniel",
-            "email": "tllcrecord@gmail.com"
-          }
-        ]
+        "admins": [{
+          "name": "Daniel",
+          "email": "tllcrecord@gmail.com"
+        }]
       },
       {
         "bucket": "wolf-lake-archives",
@@ -251,8 +258,7 @@ exports.handler = (event, context, callback) => {
             callback(null, fileUrl + " : " + label);
           }
         });
-      }
-      else {
+      } else {
         callback(null, fileUrl + " : " + label);
       }
     }).catch(function(error) {
