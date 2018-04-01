@@ -47,13 +47,13 @@ exports.handler = (event, context, callback) => {
           "email": "mjanck@yahoo.com"
         }]
       },
-      {
-        "bucket": "elk-river-archives",
-        "admins": [{
-          "name": "",
-          "email": ""
-        }]
-      },
+      // {
+      //   "bucket": "elk-river-archives",
+      //   "admins": [{
+      //     "name": "",
+      //     "email": ""
+      //   }]
+      // },
       {
         "bucket": "glendale-archives",
         "admins": [{
@@ -96,7 +96,10 @@ exports.handler = (event, context, callback) => {
       },
       {
         "bucket": "menahga-archives",
-        "admins": []
+        "admins": [{
+          "name": "Dan",
+          "email": "djarvi@wcta.net"
+        }]
       },
       {
         "bucket": "minneapolis-archives",
@@ -181,6 +184,10 @@ exports.handler = (event, context, callback) => {
           {
             "name": "Jake",
             "email": "jakerfuller@gmail.com"
+          },
+          {
+            "name": "Steve",
+            "email": "smcadams86+archive.llchurch.org@gmail.com"
           }
         ]
       },
