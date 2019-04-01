@@ -47,13 +47,13 @@ exports.handler = (event, context, callback) => {
           "email": "mjanck@yahoo.com"
         }]
       },
-      // {
-      //   "bucket": "elk-river-archives",
-      //   "admins": [{
-      //     "name": "",
-      //     "email": ""
-      //   }]
-      // },
+      {
+        "bucket": "elk-river-archives",
+        "admins": [{
+          "name": "Webcasters",
+          "email": "webcast@llcer.org"
+        }]
+      },
       {
         "bucket": "glendale-archives",
         "admins": [{
