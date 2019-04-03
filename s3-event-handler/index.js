@@ -211,6 +211,13 @@ exports.handler = (event, context, callback) => {
         }]
       },
       {
+        "bucket": "williston-archives",
+        "admins": [{
+          "name": "Ryan",
+          "email": "rerintam@mtu.edu"
+        }]
+      },
+      {
         "bucket": "wolf-lake-archives",
         "admins": [{
           "name": "Ethan",
