@@ -104,8 +104,8 @@ exports.handler = (event, context, callback) => {
       {
         "bucket": "minneapolis-archives",
         "admins": [{
-            "name": "Mary Ann",
-            "email": "maryannwikman@gmail.com"
+            "name": "Robert",
+            "email": "bob.hall88@gmail.com"
           },
           {
             "name": "Minneapolis",
