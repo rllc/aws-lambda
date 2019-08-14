@@ -170,10 +170,6 @@ exports.handler = (event, context, callback) => {
             "email": "nevala.rick@gmail.com"
           },
           {
-            "name": "Darrel",
-            "email": "dhillukka@gmail.com"
-          },
-          {
             "name": "Chet",
             "email": "laurachetdavison@gmail.com"
           },
