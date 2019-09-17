@@ -200,6 +200,14 @@ exports.handler = (event, context, callback) => {
         ]
       },
       {
+        "bucket": "spokane-archives",
+        "admins": [{
+            "name": "Kai",
+            "email": "kainevala@hotmail.com"
+          }
+	]
+      },
+      {
         "bucket": "toronto-archives",
         "admins": [{
           "name": "Daniel",
