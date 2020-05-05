@@ -88,6 +88,13 @@ exports.handler = (event, context, callback) => {
         }]
       },
       {
+        "bucket": "llc-evening-devotion-archives",
+        "admins": [{
+          "name": "Adrian",
+          "email": "apirness@gmail.com"
+        }]
+      },
+      {
         "bucket": "longview-archives",
         "admins": [{
           "name": "Longview",
